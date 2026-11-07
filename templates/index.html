@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerMatch | AI-Based Job Recommendation System</title>
+  <meta name="description" content="AI-driven career and job recommendation system using TF-IDF Vectorization and Cosine Similarity to match candidate skills with ideal job roles.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="brand-logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-compass"></i>
+        </div>
+        <div class="logo-text">
+          <span>Career<strong>Match</strong></span>
+          <span class="ai-badge"><i class="fa-solid fa-sparkles"></i> AI Engine</span>
+        </div>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#categories" class="nav-link">Categories</a>
+        <a href="#assessment" class="nav-link">Profile Matcher</a>
+        <a href="#how-it-works" class="nav-link">Algorithm</a>
+        <a href="#explore-jobs" class="nav-link">Browse Jobs</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="#assessment" class="btn btn-primary btn-sm">
+          <i class="fa-solid fa-bolt"></i> Get Started
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-pill">
+          <span class="pill-dot"></span> Next-Gen Career Guidance Powered by Machine Learning
+        </div>
+        <h1 class="hero-title">
+          Find Your <span class="gradient-text">Perfect Career</span> With Precision AI
+        </h1>
+        <p class="hero-description">
+          Bridge your education and technical skills with high-demand industry roles. 
+          CareerMatch analyzes your unique profile using <strong>TF-IDF Vectorization</strong> and 
+          <strong>Cosine Similarity</strong> to discover top job matches and provide an actionable skill gap roadmap.
+        </p>
+        <div class="hero-cta">
+          <a href="#assessment" class="btn btn-primary btn-lg">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Match My Profile
+          </a>
+          <a href="#explore-jobs" class="btn btn-outline btn-lg">
+            <i class="fa-solid fa-briefcase"></i> Explore 25+ Jobs
+          </a>
+        </div>
+        
+        <!-- Quick stats -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">25+</span>
+            <span class="stat-label">In-Demand Roles</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">TF-IDF</span>
+            <span class="stat-label">NLP Vectorizer</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">Cosine</span>
+            <span class="stat-label">Similarity Metric</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Open Source ML</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="visual-card">
+          <div class="visual-header">
+            <div class="visual-icon-box">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <div>
+              <h3>AI Match Scoring</h3>
+              <p>Real-time skill gap computation</p>
+            </div>
+            <span class="pulse-indicator"></span>
+          </div>
+          <div class="preview-metric">
+            <div class="metric-info">
+              <span>Similarity Score</span>
+              <strong class="text-primary">94.5% &bull; Exceptional Match</strong>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" style="width: 94.5%;"></div>
+            </div>
+          </div>
+          <div class="preview-tags">
+            <div class="preview-tag-group">
+              <span class="tag-title text-success"><i class="fa-solid fa-circle-check"></i> Matched Competencies (4)</span>
+              <div class="chips-row">
+                <span class="chip chip-success"><i class="fa-solid fa-check"></i> Python</span>
+                <span class="chip chip-success"><i class="fa-solid fa-check"></i> Machine Learning</span>
+                <span class="chip chip-success"><i class="fa-solid fa-check"></i> Pandas</span>
+                <span class="chip chip-success"><i class="fa-solid fa-check"></i> Scikit-learn</span>
+              </div>
+            </div>
+            <div class="preview-tag-group">
+              <span class="tag-title text-danger"><i class="fa-solid fa-graduation-cap"></i> Skills to Learn (2)</span>
+              <div class="chips-row">
+                <span class="chip chip-missing"><i class="fa-solid fa-bolt"></i> PyTorch</span>
+                <span class="chip chip-missing"><i class="fa-solid fa-bolt"></i> Deep Learning</span>
+              </div>
+            </div>
+          </div>
+          <div class="visual-footer-pill">
+            <i class="fa-solid fa-shield-check text-primary"></i> 100% Deterministic Local Algorithm
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Overview & Feature Highlights Section -->
+  <section class="section features-section" id="features">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="badge-sub"><i class="fa-solid fa-star"></i> Platform Capabilities</span>
+        <h2 class="section-title">Designed for Students & Job Seekers</h2>
+        <p class="section-subtitle">
+          CareerMatch combines transparent Natural Language Processing with modern design to deliver clear, actionable career insights without paid APIs or black-box predictions.
+        </p>
+      </div>
+
+      <div class="features-grid">
+        
+        <!-- Feature 1 -->
+        <div class="feature-card">
+          <div class="feature-icon feature-blue">
+            <i class="fa-solid fa-vector-square"></i>
+          </div>
+          <h3>TF-IDF Vectorization</h3>
+          <p>
+            Converts technical skills, degrees, and job descriptions into dense numerical vectors, weighting rare specialized competencies higher than common vocabulary.
+          </p>
+          <div class="feature-tag">Scikit-learn NLP</div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card">
+          <div class="feature-icon feature-emerald">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+          <h3>Cosine Similarity Metric</h3>
+          <p>
+            Computes the exact mathematical cosine angle between candidate vectors and job requirement vectors to determine transparent, reliable alignment scores.
+          </p>
+          <div class="feature-tag">Vector Space Model</div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card">
+          <div class="feature-icon feature-purple">
+            <i class="fa-solid fa-route"></i>
+          </div>
+          <h3>Visual Skill Gap Analysis</h3>
+          <p>
+            Instantly separates skills you already possess from the missing skills required for the role, providing a targeted learning roadmap for interview readiness.
+          </p>
+          <div class="feature-tag">Roadmap Generator</div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card">
+          <div class="feature-icon feature-cyan">
+            <i class="fa-solid fa-filter"></i>
+          </div>
+          <h3>Live Search & Dynamic Filters</h3>
+          <p>
+            Filter generated recommendations by job domain, search by specific tech stack keywords, and sort by highest similarity score or title in real time.
+          </p>
+          <div class="feature-tag">Interactive Controls</div>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="feature-card">
+          <div class="feature-icon feature-amber">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <h3>Zero External APIs / 100% Private</h3>
+          <p>
+            Runs entirely on a local Python Flask backend. Your personal data is never transmitted to third-party AI APIs or commercial tracking services.
+          </p>
+          <div class="feature-tag">Private & Offline</div>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card">
+          <div class="feature-icon feature-red">
+            <i class="fa-solid fa-database"></i>
+          </div>
+          <h3>Curated 25+ Benchmark Roles</h3>
+          <p>
+            Pre-indexed with 25+ realistic job profiles spanning Software Development, AI & Data, Cloud & DevOps, Cybersecurity, UI/UX, and Database Administration.
+          </p>
+          <div class="feature-tag">Pandas Dataset</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Job Categories Section -->
+  <section class="section categories-section" id="categories">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="badge-sub"><i class="fa-solid fa-layer-group"></i> Explore Domains</span>
+        <h2 class="section-title">Popular Job Domains</h2>
+        <p class="section-subtitle">Click any domain to quickly explore its core skills and roles.</p>
+      </div>
+
+      <div class="categories-grid" id="categoriesGrid">
+        <div class="category-card" data-domain="Software Development">
+          <div class="cat-icon cat-blue"><i class="fa-solid fa-code"></i></div>
+          <h3>Software Development</h3>
+          <p>Python, Java, Full Stack, Frontend, Backend & Embedded systems.</p>
+          <span class="cat-count"><i class="fa-solid fa-arrow-right"></i> 9 Benchmark Roles</span>
+        </div>
+        <div class="category-card" data-domain="Artificial Intelligence">
+          <div class="cat-icon cat-purple"><i class="fa-solid fa-robot"></i></div>
+          <h3>Artificial Intelligence</h3>
+          <p>Machine Learning, Deep Learning, NLP, Data Science & LLM Engineering.</p>
+          <span class="cat-count"><i class="fa-solid fa-arrow-right"></i> 5 Benchmark Roles</span>
+        </div>
+        <div class="category-card" data-domain="Data & Analytics">
+          <div class="cat-icon cat-emerald"><i class="fa-solid fa-chart-line"></i></div>
+          <h3>Data & Analytics</h3>
+          <p>Data Analysis, Big Data Pipelines, BI, SQL & Business Analytics.</p>
+          <span class="cat-count"><i class="fa-solid fa-arrow-right"></i> 4 Benchmark Roles</span>
+        </div>
+        <div class="category-card" data-domain="Cloud & DevOps">
+          <div class="cat-icon cat-cyan"><i class="fa-solid fa-cloud"></i></div>
+          <h3>Cloud & DevOps</h3>
+          <p>AWS, Azure, Docker, Kubernetes, CI/CD pipelines & Infrastructure.</p>
+          <span class="cat-count"><i class="fa-solid fa-arrow-right"></i> 4 Benchmark Roles</span>
+        </div>
+        <div class="category-card" data-domain="Cybersecurity">
+          <div class="cat-icon cat-red"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3>Cybersecurity</h3>
+          <p>Threat Analysis, Network Security, SIEM, IAM & Cloud Security.</p>
+          <span class="cat-count"><i class="fa-solid fa-arrow-right"></i> 2 Benchmark Roles</span>
+        </div>
+        <div class="category-card" data-domain="Design & Product">
+          <div class="cat-icon cat-amber"><i class="fa-solid fa-palette"></i></div>
+          <h3>Design & Product</h3>
+          <p>UI/UX Design, Figma Prototyping, Wireframing & Product Management.</p>
+          <span class="cat-count"><i class="fa-solid fa-arrow-right"></i> 2 Benchmark Roles</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Assessment Form Section -->
+  <section class="section assessment-section" id="assessment">
+    <div class="container">
+      <div class="assessment-wrapper">
+        <div class="assessment-header text-center">
+          <span class="badge-sub"><i class="fa-solid fa-id-card"></i> Candidate Assessment</span>
+          <h2 class="section-title">Enter Your Profile Details</h2>
+          <p class="section-subtitle">
+            Provide your qualifications and technical skills. Our algorithm will vectorize your profile and compute your optimal career matches.
+          </p>
+
+          <!-- Preset profile buttons for quick testing -->
+          <div class="presets-container">
+            <span class="preset-label"><i class="fa-solid fa-wand-magic-sparkles"></i> One-Click Presets:</span>
+            <div class="preset-buttons">
+              <button type="button" class="btn-preset" data-preset="ml">
+                <i class="fa-solid fa-brain"></i> ML & Data Fresher
+              </button>
+              <button type="button" class="btn-preset" data-preset="web">
+                <i class="fa-solid fa-code"></i> Frontend / Web Dev
+              </button>
+              <button type="button" class="btn-preset" data-preset="cloud">
+                <i class="fa-solid fa-cloud"></i> DevOps & Cloud
+              </button>
+              <button type="button" class="btn-preset" data-preset="design">
+                <i class="fa-solid fa-pen-nib"></i> UI/UX Designer
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <form id="recommendationForm" class="recommendation-form" novalidate>
+          <div class="form-grid">
+            
+            <!-- Full Name -->
+            <div class="form-group" id="groupFullName">
+              <label for="fullName">
+                <i class="fa-regular fa-user text-primary"></i> Full Name <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="fullName" 
+                name="name" 
+                class="form-control" 
+                placeholder="e.g. Alex Morgan" 
+                required
+              >
+              <small class="form-hint">Used to personalize your match assessment results.</small>
+              <span class="field-error-msg d-none" id="errorFullName">Please enter your full name.</span>
+            </div>
+
+            <!-- Educational Qualification -->
+            <div class="form-group" id="groupQualification">
+              <label for="qualification">
+                <i class="fa-solid fa-graduation-cap text-primary"></i> Educational Qualification <span class="required">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="qualification" 
+                name="qualification" 
+                class="form-control" 
+                placeholder="e.g. B.Tech in Computer Science / BCA / MCA / BS Data Science" 
+                required
+              >
+              <small class="form-hint">Your degree or primary field of academic study.</small>
+              <span class="field-error-msg d-none" id="errorQualification">Please enter your educational qualification.</span>
+            </div>
+
+            <!-- Skills (Comma-separated) -->
+            <div class="form-group full-width" id="groupSkills">
+              <label for="skills">
+                <i class="fa-solid fa-laptop-code text-primary"></i> Technical Skills (Comma-Separated) <span class="required">*</span>
+              </label>
+              <textarea 
+                id="skills" 
+                name="skills" 
+                class="form-control textarea" 
+                rows="3" 
+                placeholder="e.g. Python, SQL, Machine Learning, Pandas, Scikit-learn, Git" 
+                required
+              ></textarea>
+              <span class="field-error-msg d-none" id="errorSkills">Please enter at least one skill to generate recommendations.</span>
+              
+              <!-- Quick Add Skill Chips -->
+              <div class="quick-skills-wrapper">
+                <span class="quick-skills-title"><i class="fa-solid fa-plus-circle text-primary"></i> Tap to add in-demand skills:</span>
+                <div class="quick-chips">
+                  <span class="quick-chip" data-skill="Python">+ Python</span>
+                  <span class="quick-chip" data-skill="JavaScript">+ JavaScript</span>
+                  <span class="quick-chip" data-skill="React">+ React</span>
+                  <span class="quick-chip" data-skill="SQL">+ SQL</span>
+                  <span class="quick-chip" data-skill="Machine Learning">+ Machine Learning</span>
+                  <span class="quick-chip" data-skill="Pandas">+ Pandas</span>
+                  <span class="quick-chip" data-skill="Java">+ Java</span>
+                  <span class="quick-chip" data-skill="Docker">+ Docker</span>
+                  <span class="quick-chip" data-skill="AWS">+ AWS</span>
+                  <span class="quick-chip" data-skill="HTML5">+ HTML5</span>
+                  <span class="quick-chip" data-skill="CSS3">+ CSS3</span>
+                  <span class="quick-chip" data-skill="Figma">+ Figma</span>
+                  <span class="quick-chip" data-skill="Git">+ Git</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Areas of Interest -->
+            <div class="form-group">
+              <label for="interests">
+                <i class="fa-solid fa-compass text-primary"></i> Areas of Interest
+              </label>
+              <input 
+                type="text" 
+                id="interests" 
+                name="interests" 
+                class="form-control" 
+                placeholder="e.g. Artificial Intelligence, Predictive Modeling, Data Science"
+              >
+              <small class="form-hint">Technology domains you are passionate about.</small>
+            </div>
+
+            <!-- Preferred Job Role -->
+            <div class="form-group">
+              <label for="preferredRole">
+                <i class="fa-solid fa-briefcase text-primary"></i> Preferred Job Role (Optional)
+              </label>
+              <input 
+                type="text" 
+                id="preferredRole" 
+                name="preferredRole" 
+                class="form-control" 
+                placeholder="e.g. Machine Learning Engineer / Data Scientist"
+              >
+              <small class="form-hint">Target career position you are aspiring toward.</small>
+            </div>
+
+            <!-- Top N Recommendations -->
+            <div class="form-group">
+              <label for="topN">
+                <i class="fa-solid fa-list-ol text-primary"></i> Number of Recommendations
+              </label>
+              <select id="topN" name="topN" class="form-control select">
+                <option value="5" selected>Top 5 Recommendations (Recommended)</option>
+                <option value="3">Top 3 Focused Matches</option>
+                <option value="8">Top 8 Extended Matches</option>
+                <option value="15">Top 15 Broad Matches</option>
+              </select>
+              <small class="form-hint">Number of top matching roles to evaluate.</small>
+            </div>
+
+          </div>
+
+          <!-- Form Action Buttons -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Find Recommended Jobs
+            </button>
+            <button type="button" class="btn btn-secondary btn-lg" id="resetBtn">
+              <i class="fa-solid fa-rotate-left"></i> Clear / Reset Form
+            </button>
+          </div>
+
+          <!-- Alert Box -->
+          <div id="formAlert" class="alert-box d-none" role="alert"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendation Results Section -->
+  <section class="section results-section d-none" id="resultsSection">
+    <div class="container">
+      
+      <!-- Loading Spinner Indicator -->
+      <div id="loadingIndicator" class="loading-container d-none">
+        <div class="spinner"></div>
+        <p class="loading-title">Analyzing Your Profile...</p>
+        <p class="loading-text" id="loadingDynamicText">Extracting TF-IDF Vectors & Cosine Similarity Scores...</p>
+      </div>
+
+      <!-- Results Display Container -->
+      <div id="resultsContainer" class="results-container">
+        
+        <!-- Success Notification Banner -->
+        <div class="success-banner" id="resultsSuccessBanner">
+          <div class="success-icon-box">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div class="success-content">
+            <h4 id="successBannerTitle">Recommendations Generated Successfully!</h4>
+            <p id="successBannerSubtitle">
+              We evaluated your profile against all 25 benchmark roles. Below are your top-matched positions ranked by similarity score.
+            </p>
+          </div>
+          <button class="banner-close-btn" id="closeSuccessBannerBtn" aria-label="Dismiss banner">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="results-header-box">
+          <div>
+            <span class="badge-sub"><i class="fa-solid fa-chart-line"></i> Match Results</span>
+            <h2 class="section-title" id="resultsTitle">Top Recommended Jobs</h2>
+            <p class="section-subtitle" id="resultsSubtitle">
+              Roles ranked by mathematical skill and semantic similarity to your profile.
+            </p>
+          </div>
+          <div class="evaluated-badge" id="evaluatedBadge">
+            <i class="fa-solid fa-database"></i> Evaluated 25 Benchmark Roles
+          </div>
+        </div>
+
+        <!-- Disclaimer Banner -->
+        <div class="disclaimer-banner">
+          <i class="fa-solid fa-circle-info"></i>
+          <div>
+            <strong>Similarity Score Notice:</strong>
+            The percentage represents mathematical similarity between your entered skills and the job's requirements (via TF-IDF & Cosine Similarity). It is an objective alignment metric and not a guarantee of employment.
+          </div>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="filter-toolbar">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="filterSearch" placeholder="Search recommendations by title, company, or skill...">
+          </div>
+
+          <div class="filter-controls">
+            <div class="filter-group">
+              <label for="filterCategory"><i class="fa-solid fa-filter"></i> Domain:</label>
+              <select id="filterCategory" class="filter-select">
+                <option value="all">All Domains</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <label for="sortOrder"><i class="fa-solid fa-arrow-down-short-wide"></i> Sort By:</label>
+              <select id="sortOrder" class="filter-select">
+                <option value="sim_desc" selected>Highest Match % First</option>
+                <option value="sim_asc">Lowest Match % First</option>
+                <option value="title_asc">Job Title (A-Z)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Counter & Status -->
+        <div class="results-meta-bar">
+          <span id="resultsCountText">Showing 5 of 5 matching jobs</span>
+          <button id="clearFiltersBtn" class="btn-text d-none">
+            <i class="fa-solid fa-xmark"></i> Clear Filters
+          </button>
+        </div>
+
+        <!-- Job Cards Grid -->
+        <div class="job-cards-grid" id="jobCardsGrid">
+          <!-- Job cards will be dynamically injected here via JavaScript -->
+        </div>
+
+        <!-- Empty state when no jobs match filter -->
+        <div id="noResultsState" class="empty-state d-none">
+          <div class="empty-icon">
+            <i class="fa-regular fa-folder-open"></i>
+          </div>
+          <h3>No Matching Jobs Found</h3>
+          <p>No recommendations match your current search terms or domain filter. Try broadening your criteria or clicking Reset Filters.</p>
+          <button type="button" class="btn btn-outline" id="resetFiltersBtn">Reset Filters</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section how-it-works-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="badge-sub"><i class="fa-solid fa-microchip"></i> Algorithm Architecture</span>
+        <h2 class="section-title">How the Recommendation Engine Works</h2>
+        <p class="section-subtitle">
+          Transparent, mathematical content-based filtering without opaque black-box AI.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-badge">Step 1</div>
+          <div class="step-icon"><i class="fa-solid fa-file-lines"></i></div>
+          <h3>Profile Document Construction</h3>
+          <p>
+            The system combines your qualifications, technical skills, interests, and target roles into an enriched candidate profile text document.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">Step 2</div>
+          <div class="step-icon"><i class="fa-solid fa-calculator"></i></div>
+          <h3>TF-IDF Vectorization</h3>
+          <p>
+            Scikit-learn’s <strong>TF-IDF Vectorizer</strong> tokenizes n-grams (unigrams & bigrams) and converts text into numerical vectors, weighting rare technical skills higher.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">Step 3</div>
+          <div class="step-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+          <h3>Cosine Similarity Calculation</h3>
+          <p>
+            The model computes the angular cosine distance between the candidate vector and every benchmark job vector in the dataset, determining geometric proximity.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-badge">Step 4</div>
+          <div class="step-icon"><i class="fa-solid fa-list-check"></i></div>
+          <h3>Skill Gap Roadmap Extraction</h3>
+          <p>
+            Candidate competencies are intersected with each job's required skills to extract matched skills and generate a targeted learning roadmap.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore All Jobs Catalog Section -->
+  <section class="section explore-jobs-section" id="explore-jobs">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="badge-sub"><i class="fa-solid fa-briefcase"></i> Complete Catalog</span>
+        <h2 class="section-title">Browse All Benchmark Jobs</h2>
+        <p class="section-subtitle">Explore all 25+ benchmark jobs currently indexed in the dataset.</p>
+      </div>
+
+      <div class="explore-toolbar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="catalogSearch" placeholder="Filter jobs by role title, company or skill...">
+        </div>
+        <div class="filter-group">
+          <select id="catalogCategoryFilter" class="filter-select">
+            <option value="all">All Domains</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="catalog-grid" id="catalogGrid">
+        <!-- Catalog jobs populated via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Job Details Modal -->
+  <div class="modal-backdrop d-none" id="jobModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <span class="modal-category" id="modalCategory">Category</span>
+          <h3 class="modal-title" id="modalTitle">Job Title</h3>
+          <p class="modal-company" id="modalCompany"><i class="fa-regular fa-building"></i> Company Name</p>
+        </div>
+        <button class="modal-close" id="modalCloseBtn" aria-label="Close modal">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h4><i class="fa-solid fa-file-lines text-primary"></i> Job Overview</h4>
+          <p id="modalDescription" class="modal-desc-text"></p>
+        </div>
+        <div class="modal-section">
+          <h4><i class="fa-solid fa-list-check text-primary"></i> Required Skills</h4>
+          <div id="modalSkills" class="chips-row"></div>
+        </div>
+        <div class="modal-section" id="modalMatchSection">
+          <h4><i class="fa-solid fa-chart-pie text-primary"></i> Match Breakdown</h4>
+          <div id="modalMatchContent"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modalCloseFooterBtn">Close</button>
+        <button type="button" class="btn btn-primary" id="modalApplyBtn">
+          <i class="fa-solid fa-bookmark"></i> Save Job
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-col brand-col">
+        <div class="footer-brand">
+          <div class="logo-icon"><i class="fa-solid fa-compass"></i></div>
+          <span>Career<strong>Match</strong></span>
+        </div>
+        <p class="footer-text">
+          An intelligent, open-source AI job recommendation system that bridges candidate skills with career opportunities using Scikit-Learn TF-IDF vectorization and Cosine Similarity.
+        </p>
+        <div class="footer-tech-stack">
+          <span class="tech-tag"><i class="fa-brands fa-python"></i> Python Flask</span>
+          <span class="tech-tag"><i class="fa-solid fa-brain"></i> Scikit-learn</span>
+          <span class="tech-tag"><i class="fa-solid fa-table"></i> Pandas</span>
+          <span class="tech-tag"><i class="fa-brands fa-js"></i> Vanilla JS</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul class="footer-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#features">Feature Highlights</a></li>
+          <li><a href="#categories">Job Categories</a></li>
+          <li><a href="#assessment">Profile Assessment</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#explore-jobs">All Jobs Catalog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Dataset Domains</h4>
+        <ul class="footer-links">
+          <li><a href="#categories">Software Development</a></li>
+          <li><a href="#categories">Artificial Intelligence</a></li>
+          <li><a href="#categories">Data & Analytics</a></li>
+          <li><a href="#categories">Cloud & DevOps</a></li>
+          <li><a href="#categories">Cybersecurity</a></li>
+          <li><a href="#categories">Design & Product</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>About Project</h4>
+        <p class="footer-meta">
+          <strong>CareerMatch</strong> is engineered as a clean, production-ready full-stack portfolio & capstone project demonstrating real machine learning integration without external paid APIs.
+        </p>
+        <div class="footer-legal">
+          <span>&copy; 2026 CareerMatch. Designed for Students & Job Seekers.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Script -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
